@@ -43,8 +43,7 @@ contract CastrTest is Test {
         castr.setTokenURI("https://example2.com");
     }
 
-    // TODO: Figure out how to test non-existant tokenURI.
-    // For some reason it doesn't work
+    // TODO: Figure out how to test non-existant tokenURI for some reason it doesn't work
     // function test_RevertIf_DoesntExist_TokenURI() public {
     //     vm.expectRevert("Token URI does not exist");
     //     castr.tokenURI(10);
