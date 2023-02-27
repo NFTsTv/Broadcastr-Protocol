@@ -46,10 +46,6 @@ contract Castr is ERC721, Ownable {
         mintPrice = _mintPrice;
     }
 
-    function name() public view virtual override returns (string memory) {
-        return CastrName;
-    }
-
     // @dev: This function is used to add new addresses to the list of allowed people to stream
     // @param: _newEmitter: address of the new emitter
     // @return: void
