@@ -24,7 +24,7 @@ contract Castr is ERC721, Ownable {
 
     address[] public castrAddresses;
 
-    constructor() ERC721("", "CASTR") {}
+    constructor(string memory _CastrName) ERC721(_CastrName, "CASTR") {}
 
     function initialize(
         string memory _baseTokenURI,
@@ -44,6 +44,10 @@ contract Castr is ERC721, Ownable {
         limitedSupply = _limitedSupply;
         totalSupply = _totalSupply;
         mintPrice = _mintPrice;
+    }
+
+    function name() public view virtual override returns (string memory) {
+        return CastrName;
     }
 
     // @dev: This function is used to add new addresses to the list of allowed people to stream
@@ -97,10 +101,6 @@ contract Castr is ERC721, Ownable {
             _safeMint(recipient, newTokenId);
             return newTokenId;
         }
-    }
-
-    function getNumberOfSubscribers() public view returns (uint256) {
-        return currentTokenId;
     }
 
     // @dev: This function is used to withdraw the payments from the contract

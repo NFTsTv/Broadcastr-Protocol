@@ -19,7 +19,7 @@ contract CastrFactory {
         public
         returns (address)
     {
-        Castr contractInstance = new Castr();
+        Castr contractInstance = new Castr(_name);
         address contractAddress = address(contractInstance);
         Castr(contractAddress).initialize(_uri, _name, _description, _limitedSupply, _totalSupply, _mintPrice);
         Castrs.push(contractAddress);
