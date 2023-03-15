@@ -3,9 +3,9 @@
 Contracts for the Broadcastr protocol.
 
 ## For contributing
-`git clone https://github.com/NFTsTv/NFTsTv-Contracts`
+`git clone https://github.com/NFTsTv/Broadcastr-Protocol`
 
-`cd NFTsTv`
+`cd Broadcastr-Protocol`
 
 `git checkout -b yourbranchname`
 
