@@ -24,7 +24,7 @@ contract Castr is ERC721, Ownable {
 
     address[] public castrAddresses;
 
-    constructor(string memory _CastrName) ERC721(_CastrName, "CASTR") {}
+    constructor() ERC721("Broadcastr", "CASTR") {}
 
     function initialize(
         string memory _baseTokenURI,
@@ -110,7 +110,11 @@ contract Castr is ERC721, Ownable {
         }
     }
 
-    function getMetadata() public view returns (string memory, string memory, string memory, bool, uint256, uint256) {
-        return (baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice);
+    function getMetadata()
+        public
+        view
+        returns (string memory, string memory, string memory, bool, uint256, uint256, uint256)
+    {
+        return (baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice, currentTokenId);
     }
 }

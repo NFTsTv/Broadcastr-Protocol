@@ -19,7 +19,7 @@ contract CastrFactory {
         public
         returns (address)
     {
-        Castr contractInstance = new Castr(_name);
+        Castr contractInstance = new Castr();
         address contractAddress = address(contractInstance);
         Castr(contractAddress).initialize(_uri, _name, _description, _limitedSupply, _totalSupply, _mintPrice);
         Castrs.push(contractAddress);
@@ -36,7 +36,7 @@ contract CastrFactory {
     function getMetadata(address _CastrAddress)
         public
         view
-        returns (string memory, string memory, string memory, bool, uint256, uint256)
+        returns (string memory, string memory, string memory, bool, uint256, uint256, uint256)
     {
         return Castr(_CastrAddress).getMetadata();
     }
