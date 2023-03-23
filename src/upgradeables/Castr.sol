@@ -24,6 +24,11 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
 
     string[] public tags;
 
+    event MetadataUpdated(
+        string baseTokenURI, string name, string description, bool limitedSupply, uint256 totalSupply, uint256 mintPrice
+    );
+    event TokenMinted(address indexed recipient, uint256 tokenId);
+
     function initialize(
         string memory _baseTokenURI,
         string memory _name,
@@ -53,18 +58,22 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
 
     function setTokenURI(string memory _baseTokenURI) public onlyOwner {
         baseTokenURI = _baseTokenURI;
+        emit MetadataUpdated(baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice);
     }
 
     function setName(string memory _name) public onlyOwner {
         CastrName = _name;
+        emit MetadataUpdated(baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice);
     }
 
     function setDescription(string memory _description) public onlyOwner {
         description = _description;
+        emit MetadataUpdated(baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice);
     }
 
     function setSubscriptionPrice(uint256 _mintPrice) public onlyOwner {
         mintPrice = _mintPrice;
+        emit MetadataUpdated(baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice);
     }
 
     function setTags(string[] memory _tags) public onlyOwner {
@@ -82,6 +91,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         if (msg.sender == owner()) {
             uint256 newTokenId = ++currentTokenId;
             _safeMint(recipient, newTokenId);
+            emit TokenMinted(recipient, newTokenId);
             return newTokenId;
         }
 
@@ -90,6 +100,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         } else {
             uint256 newTokenId = ++currentTokenId;
             _safeMint(recipient, newTokenId);
+            emit TokenMinted(recipient, newTokenId);
             return newTokenId;
         }
     }
