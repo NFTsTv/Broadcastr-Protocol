@@ -14,7 +14,6 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     using Strings for uint256;
 
     uint256 public currentTokenId;
-    bool public isInitialized = false;
 
     string public CastrName;
     string public baseTokenURI;
@@ -23,7 +22,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     uint256 public totalSupply;
     uint256 public mintPrice;
 
-    address[] public castrAddresses;
+    string[] public tags;
 
     function initialize(
         string memory _baseTokenURI,
@@ -43,13 +42,6 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         limitedSupply = _limitedSupply;
         totalSupply = _totalSupply;
         mintPrice = _mintPrice;
-    }
-
-    // @dev: This function is used to add new addresses to the list of allowed people to stream
-    // @param: _newEmitter: address of the new emitter
-    // @return: void
-    function addEmitterAddress(address _newEmitter) public onlyOwner {
-        castrAddresses.push(_newEmitter);
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
@@ -73,6 +65,10 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
 
     function setSubscriptionPrice(uint256 _mintPrice) public onlyOwner {
         mintPrice = _mintPrice;
+    }
+
+    function setTags(string[] memory _tags) public onlyOwner {
+        tags = _tags;
     }
 
     // @dev: This function is used to mint a new token paying the mint price or free if the caller is the owner
