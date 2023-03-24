@@ -32,6 +32,10 @@ contract CastrFactory {
     function getCreatorChannels(address _creatorAddress) public view returns (address[] memory) {
         return castrChannels[_creatorAddress];
     }
+    
+    function getAllCastrs() public view returns (address[] memory) {
+        return Castrs;
+    }
 
     function getMetadata(address _CastrAddress)
         public
