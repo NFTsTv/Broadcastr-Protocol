@@ -5,9 +5,9 @@ import "forge-std/Test.sol";
 import {CastrFactory} from "src/CastrFactory.sol";
 
 contract CastrFactoryTest is Test {
-    CastrFactory factory;
+    CastrFactory castrFactory;
 
     function setUp() public {
-        factory = new CastrFactory();
+        castrFactory = new CastrFactory();
     }
 }

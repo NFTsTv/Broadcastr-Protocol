@@ -17,8 +17,8 @@ contract CastrFactory {
         string calldata _name,
         string calldata _description,
         bool _limitedSupply,
-        uint256 _totalSupply,
-        uint256 _mintPrice
+        uint64 _totalSupply,
+        uint16 _mintPrice
     )
         public
         returns (address)

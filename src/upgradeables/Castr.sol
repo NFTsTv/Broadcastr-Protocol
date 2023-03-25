@@ -1,41 +1,39 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin-upgradeables/contracts/token/ERC721/ERC721Upgradeable.sol";
+import "@openzeppelin-upgradeables/contracts/access/OwnableUpgradeable.sol";
+import "@openzeppelin-upgradeables/contracts/proxy/utils/Initializable.sol";
+// import "@openzeppelin/contracts/utils/Strings.sol";
 
 error MintPriceNotPaid(string message);
 error NonExistentTokenURI(string message);
 error WithdrawTransfer(string message);
 
 contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
-    using Strings for uint256;
-
-    uint256 public currentTokenId;
+    uint64 public currentTokenId;
 
     string public CastrName;
     string public baseTokenURI;
     string public description;
     bool public limitedSupply;
-    uint256 public totalSupply;
-    uint256 public mintPrice;
+    uint64 public totalSupply;
+    uint16 public mintPrice;
 
     string[] public tags;
 
     event MetadataUpdated(
-        string baseTokenURI, string name, string description, bool limitedSupply, uint256 totalSupply, uint256 mintPrice
+        string baseTokenURI, string name, string description, bool limitedSupply, uint64 totalSupply, uint16 mintPrice
     );
-    event TokenMinted(address indexed recipient, uint256 tokenId);
+    event TokenMinted(address indexed recipient, uint64 tokenId);
 
     function initialize(
         string memory _baseTokenURI,
         string memory _name,
         string memory _description,
         bool _limitedSupply,
-        uint256 _totalSupply,
-        uint256 _mintPrice
+        uint64 _totalSupply,
+        uint16 _mintPrice
     )
         external
     {
@@ -71,7 +69,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         emit MetadataUpdated(baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice);
     }
 
-    function setSubscriptionPrice(uint256 _mintPrice) public onlyOwner {
+    function setSubscriptionPrice(uint16 _mintPrice) public onlyOwner {
         mintPrice = _mintPrice;
         emit MetadataUpdated(baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice);
     }
@@ -89,7 +87,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         }
 
         if (msg.sender == owner()) {
-            uint256 newTokenId = ++currentTokenId;
+            uint64 newTokenId = ++currentTokenId;
             _safeMint(recipient, newTokenId);
             emit TokenMinted(recipient, newTokenId);
             return newTokenId;
@@ -98,7 +96,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         if (msg.value != mintPrice) {
             revert MintPriceNotPaid("Mint price not paid");
         } else {
-            uint256 newTokenId = ++currentTokenId;
+            uint64 newTokenId = ++currentTokenId;
             _safeMint(recipient, newTokenId);
             emit TokenMinted(recipient, newTokenId);
             return newTokenId;
@@ -119,7 +117,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     function getMetadata()
         public
         view
-        returns (string memory, string memory, string memory, bool, uint256, uint256, uint256)
+        returns (string memory, string memory, string memory, bool, uint64, uint16, uint64)
     {
         return (baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice, currentTokenId);
     }

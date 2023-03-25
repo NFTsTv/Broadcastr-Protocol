@@ -21,18 +21,21 @@ contract CastrFactory {
     {
         Castr contractInstance = new Castr();
         address contractAddress = address(contractInstance);
-        Castr(contractAddress).initialize(_uri, _name, _description, _limitedSupply, _totalSupply, _mintPrice);
+
         Castrs.push(contractAddress);
         castrChannels[msg.sender].push(contractAddress);
-        contractInstance.subscribe(msg.sender);
+
         contractInstance.transferOwnership(msg.sender);
+        contractInstance.subscribe(msg.sender);
+        Castr(contractAddress).initialize(_uri, _name, _description, _limitedSupply, _totalSupply, _mintPrice);
+
         return contractAddress;
     }
 
     function getCreatorChannels(address _creatorAddress) public view returns (address[] memory) {
         return castrChannels[_creatorAddress];
     }
-    
+
     function getAllCastrs() public view returns (address[] memory) {
         return Castrs;
     }
