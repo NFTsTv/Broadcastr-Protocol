@@ -11,34 +11,32 @@ error NonExistentTokenURI(string message);
 error WithdrawTransfer(string message);
 
 contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
-    uint64 public currentTokenId;
+    uint128 public currentTokenId;
 
     string public CastrName;
     string public baseTokenURI;
     string public description;
     bool public limitedSupply;
-    uint64 public totalSupply;
+    uint128 public totalSupply;
     uint16 public mintPrice;
 
     string[] public tags;
 
     event MetadataUpdated(
-        string baseTokenURI, string name, string description, bool limitedSupply, uint64 totalSupply, uint16 mintPrice
+        string baseTokenURI, string name, string description, bool limitedSupply, uint128 totalSupply, uint16 mintPrice
     );
-    event TokenMinted(address indexed recipient, uint64 tokenId);
+    event TokenMinted(address indexed recipient, uint128 tokenId);
 
     function initialize(
-        string memory _baseTokenURI,
-        string memory _name,
-        string memory _description,
+        string calldata _baseTokenURI,
+        string calldata _name,
+        string calldata _description,
         bool _limitedSupply,
-        uint64 _totalSupply,
+        uint128 _totalSupply,
         uint16 _mintPrice
     )
         external
     {
-        __ERC721_init("Broadcastr", "CASTR");
-        __Ownable_init();
         baseTokenURI = _baseTokenURI;
         CastrName = _name;
         description = _description;
@@ -81,13 +79,13 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     // @dev: This function is used to mint a new token paying the mint price or free if the caller is the owner
     // @param: recipient: address of the recipient
     // @return: newTokenId: id of the new token
-    function subscribe(address recipient) public payable returns (uint256) {
+    function subscribe(address recipient) public payable returns (uint128) {
         if (limitedSupply) {
             require(currentTokenId < totalSupply, "No more tokens available");
         }
 
         if (msg.sender == owner()) {
-            uint64 newTokenId = ++currentTokenId;
+            uint128 newTokenId = ++currentTokenId;
             _safeMint(recipient, newTokenId);
             emit TokenMinted(recipient, newTokenId);
             return newTokenId;
@@ -96,7 +94,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
         if (msg.value != mintPrice) {
             revert MintPriceNotPaid("Mint price not paid");
         } else {
-            uint64 newTokenId = ++currentTokenId;
+            uint128 newTokenId = ++currentTokenId;
             _safeMint(recipient, newTokenId);
             emit TokenMinted(recipient, newTokenId);
             return newTokenId;
@@ -117,7 +115,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     function getMetadata()
         public
         view
-        returns (string memory, string memory, string memory, bool, uint64, uint16, uint64)
+        returns (string memory, string memory, string memory, bool, uint128, uint16, uint128)
     {
         return (baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice, currentTokenId);
     }

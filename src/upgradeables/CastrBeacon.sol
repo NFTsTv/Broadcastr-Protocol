@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CastrBeacon is Ownable {
-    UpgradeableBeacon immutable beacon;
+    UpgradeableBeacon public immutable beacon;
 
     address public blueprint;
 

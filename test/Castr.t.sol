@@ -2,7 +2,7 @@
 pragma solidity ^0.8.9;
 
 import "forge-std/Test.sol";
-import {Castr} from "src/Castr.sol";
+import {Castr} from "src/upgradeables/Castr.sol";
 
 contract CastrTest is Test {
     Castr castr;
@@ -13,23 +13,11 @@ contract CastrTest is Test {
     }
 
     function test_SetUpState() public {
-        assertEq(castr.isInitialized(), true);
         assertEq(castr.baseTokenURI(), "https://example.com");
         assertEq(castr.CastrName(), "mariodev");
         assertEq(castr.description(), "I dev stuff");
         assertEq(castr.totalSupply(), 3);
         assertEq(castr.mintPrice(), 1);
-    }
-
-    function testAddEmitterAddress() public {
-        castr.addEmitterAddress(address(1));
-        assertEq(castr.castrAddresses(0), address(1));
-    }
-
-    function test_RevertIf_NotOwner_AddEmitterAddress() public {
-        vm.expectRevert("Ownable: caller is not the owner");
-        vm.prank(address(1));
-        castr.addEmitterAddress(address(2));
     }
 
     function testSetTokenURI() public {
