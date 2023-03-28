@@ -19,6 +19,7 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     bool public limitedSupply;
     uint128 public totalSupply;
     uint16 public mintPrice;
+    uint public nextLivestreamDateTime;                     // expressed in seconds since 1 Jan 1970 at 00:00:00
 
     string[] public tags;
 
@@ -119,4 +120,10 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     {
         return (baseTokenURI, CastrName, description, limitedSupply, totalSupply, mintPrice, currentTokenId);
     }
+
+    function setNextLivestreamDateTime(uint DateTime) public returns (string memory)
+    {
+        return nextLivestreamDateTime;
+    }
+
 }
