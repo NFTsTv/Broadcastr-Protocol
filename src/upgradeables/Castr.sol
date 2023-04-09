@@ -4,7 +4,6 @@ pragma solidity ^0.8.9;
 import "@openzeppelin-upgradeables/contracts/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin-upgradeables/contracts/access/OwnableUpgradeable.sol";
 import "@openzeppelin-upgradeables/contracts/proxy/utils/Initializable.sol";
-// import "@openzeppelin/contracts/utils/Strings.sol";
 
 error MintPriceNotPaid(string message);
 error NonExistentTokenURI(string message);
@@ -27,16 +26,19 @@ contract Castr is Initializable, ERC721Upgradeable, OwnableUpgradeable {
     );
     event TokenMinted(address indexed recipient, uint128 tokenId);
 
-    function initialize(
+    function initialize() external initializer {
+        __ERC721_init("Broadcastr", "CASTR");
+        __Ownable_init();
+    }
+
+    function newCastr(
         string calldata _baseTokenURI,
         string calldata _name,
         string calldata _description,
         bool _limitedSupply,
         uint128 _totalSupply,
         uint16 _mintPrice
-    )
-        external
-    {
+    ) external {
         baseTokenURI = _baseTokenURI;
         CastrName = _name;
         description = _description;

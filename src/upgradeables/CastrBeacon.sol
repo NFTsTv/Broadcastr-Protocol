@@ -7,16 +7,16 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract CastrBeacon is Ownable {
     UpgradeableBeacon public immutable beacon;
 
-    address public blueprint;
+    address public implementation;
 
     constructor(address _blueprint) {
         beacon = new UpgradeableBeacon(_blueprint);
-        blueprint = _blueprint;
+        implementation = _blueprint;
         transferOwnership(tx.origin);
     }
 
     function update(address _newBlueprint) public onlyOwner {
         beacon.upgradeTo(_newBlueprint);
-        blueprint = _newBlueprint;
+        implementation = _newBlueprint;
     }
 }

@@ -19,15 +19,13 @@ contract CastrFactory {
         bool _limitedSupply,
         uint128 _totalSupply,
         uint16 _mintPrice
-    )
-        public
-        returns (address)
-    {
+    ) public returns (address) {
         bytes memory initData = abi.encodeWithSelector(
-            Castr.initialize.selector, _baseTokenURI, _name, _description, _limitedSupply, _totalSupply, _mintPrice
+            Castr.newCastr.selector, _baseTokenURI, _name, _description, _limitedSupply, _totalSupply, _mintPrice
         );
         BeaconProxy proxy = new BeaconProxy(address(beacon), initData);
-        address(proxy).call{value: 0}(initData);
+        (bool success,) = address(proxy).call{value: 0}(initData);
+        require(success, "CastrFactory: Castr initialization failed");
         return address(proxy);
     }
 
