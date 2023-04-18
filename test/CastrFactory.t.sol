@@ -17,6 +17,6 @@ contract CastrFactoryTest is Test {
 
     function test_createCastr() public {
         address newCastr = castrFactory.createCastr("baseTokenURI", "name", "description", false, 1, 1);
-        console.log(newCastr.CastrName());
+        console.log(newCastr);
     }
 }
